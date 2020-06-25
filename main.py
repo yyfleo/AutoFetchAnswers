@@ -38,7 +38,7 @@ for item in j["data"]:
 print("\nFetched all answers successfully. Generating index.html......")
 with open("docs/index.html", "w") as f:
     f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The fetched answers list</title></head>")
-    f.write("<body><h2>Fetched answers list:</h2><i>Updates on 12, 18, 23 every day</i><br><br>")
+    f.write("<body><h2>Fetched answers list:</h2><i>Updates on 4, 10, 15 UTC every day</i><br><br>")
     for filename in glob.glob(os.getcwd() + "/docs/*.html"):
         temp = filename.split("/")
         if temp[len(temp) - 1] == "index.html":
