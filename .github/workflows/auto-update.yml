@@ -2,7 +2,7 @@ name: Update answers automatically
 on:
   schedule:
     - cron: '0 4,10,15 * * *'
-    # run at 12, 18, 23(GMT +0800) everyday
+    # run at 12, 18, 23 (GMT +0800) everyday
   watch:
     types: started
     if: github.event.repository.owner.id == github.sender.id
