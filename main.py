@@ -44,7 +44,7 @@ with open("docs/index.html", "w") as f:
     f.write(time.asctime(time.localtime(time.time())))
     f.write(" (UTC)</i><br>")
     count = 1
-    for filename in sorted(glob.glob(os.getcwd() + "/docs/*.html")):
+    for filename in sorted(glob.glob(os.getcwd() + "/docs/*.html"), key=os.path.getmtime, reverse=True):
         temp = filename.split("/")
         if temp[len(temp) - 1] == "index.html":
             continue
