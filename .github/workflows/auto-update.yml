@@ -25,6 +25,8 @@ jobs:
           pip install beautifulsoup4
           pip install urllib3
       - name: Fetch answers and save them into several html files
+        env:
+          x-token: ${{ secrets.X_TOKEN }}
         run: python main.py
       - name: Update the answers
         run: |
