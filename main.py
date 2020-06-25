@@ -5,7 +5,7 @@ import glob
 from SeewoClassApi import GetCookies, GetTaskList, GetAnswer, GetTaskList
 
 print("Seewo eClass Fetch Reference Answer Tool Embed")
-print("V2.0 Embed in Github Actions")
+print("V2.2 Embed in Github Actions")
 print("By yyfleo.")
 print("Build 20200625\n")
 print("请注意：")
@@ -16,7 +16,7 @@ print("使用本软件即代表你同意以上条款，否则请立即关闭本�
 if not os.path.exists("docs"):
     os.makedirs("docs")
 csrf = GetTaskList.getCsrf()
-token = "cfcda80f40f148ada4a060998547d318"
+token = os.environ["X_TOKEN"]
 j = json.loads(GetTaskList.getAccountUndoneTasks(token, False, csrf))
 
 print("\nGot tasks list success! Fetching answers list sequentially......")
@@ -28,9 +28,11 @@ for item in j["data"]:
         f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The reference answers for ")
         f.write(item["taskName"])
         f.write("</title></head>")
-        f.write("<body>Last updated on ")
+        f.write("<body>")
+        f.write(item["taskName"])
+        f.write("<br>Last updated on ")
         f.write(time.asctime(time.localtime(time.time())))
-        f.write("<br>")
+        f.write(" (UTC)<br>")
         GetAnswer.fetchAnswers(token, taskid, f, True, csrf)
         f.write("</body></html>")
     i = i + 1
@@ -38,11 +40,16 @@ for item in j["data"]:
 print("\nFetched all answers successfully. Generating index.html......")
 with open("docs/index.html", "w") as f:
     f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The fetched answers list</title></head>")
-    f.write("<body><h2>Fetched answers list:</h2><i>Updates on 4, 10, 15 UTC every day</i><br><br>")
-    for filename in glob.glob(os.getcwd() + "/docs/*.html"):
+    f.write("<body><h2>Fetched answers list:</h2><i>Updates on 4, 10, 15 UTC every day</i><br><i>Last updated on ")
+    f.write(time.asctime(time.localtime(time.time())))
+    f.write(" (UTC)</i>")
+    count = 1
+    for filename in glob.glob(os.getcwd() + "/docs/*.html").sort():
         temp = filename.split("/")
         if temp[len(temp) - 1] == "index.html":
             continue
+        f.write(count)
+        f.write(". ")
         f.write("<a href=\"" + temp[len(temp) - 1] + "\">")
         i = 1
         temp = temp[len(temp) - 1].split(".")
@@ -51,7 +58,6 @@ with open("docs/index.html", "w") as f:
                f.write(item)
             i = i + 1
         f.write("</a><br>")
-    f.write("<br><i>Last updated on ")
-    f.write(time.asctime(time.localtime(time.time())))
-    f.write("</i>")
+        count = count + 1
+    f.write("<h5>Powered by Seewo eClass Fetch Reference Answer Tool Embed, powered by Github Actions and Seewo Class Api, deployed on Github Pages.</h5>")
     f.write("</body></html>")
