@@ -48,7 +48,7 @@ with open("docs/index.html", "w") as f:
         temp = filename.split("/")
         if temp[len(temp) - 1] == "index.html":
             continue
-        f.write(count)
+        f.write(str(count))
         f.write(". ")
         f.write("<a href=\"" + temp[len(temp) - 1] + "\">")
         i = 1
