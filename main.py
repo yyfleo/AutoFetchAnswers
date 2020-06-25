@@ -42,7 +42,7 @@ with open("docs/index.html", "w") as f:
     f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The fetched answers list</title></head>")
     f.write("<body><h2>Fetched answers list:</h2><i>Updates on 4, 10, 15 UTC every day</i><br><i>Last updated on ")
     f.write(time.asctime(time.localtime(time.time())))
-    f.write(" (UTC)</i>")
+    f.write(" (UTC)</i><br>")
     count = 1
     for filename in sorted(glob.glob(os.getcwd() + "/docs/*.html")):
         temp = filename.split("/")
@@ -59,5 +59,5 @@ with open("docs/index.html", "w") as f:
             i = i + 1
         f.write("</a><br>")
         count = count + 1
-    f.write("<h5>Powered by Seewo eClass Fetch Reference Answer Tool Embed, powered by Github Actions and Seewo Class Api, deployed on Github Pages.</h5>")
+    # f.write("<h5>Powered by Seewo eClass Fetch Reference Answer Tool Embed, powered by Github Actions and Seewo Class Api, deployed on Github Pages.</h5>")
     f.write("</body></html>")
