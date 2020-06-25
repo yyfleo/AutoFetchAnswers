@@ -1,0 +1,39 @@
+name: Update answers automatically
+on:
+  schedule:
+    - cron: '0 4,10,15 * * *'
+    # run at 12, 18, 23 everyday
+  watch:
+    types: started
+    if: github.event.repository.owner.id == github.sender.id
+    # start manually by star the repository
+
+jobs:
+  update:
+    name: Update answers automatically
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download latest update script
+        uses: actions/checkout@v2
+      - name: Set up python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+      - name: Download and install requirements
+        run: |
+          pip install beautifulsoup4
+          pip install urllib3
+      - name: Fetch answers and save them into several html files
+        run: python main.py
+      - name: Update the answers
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com > ~/.ssh/known_hosts
+          git config --global user.name 'Leo Yang'
+          git config --global user.email '731193292@qq.com'
+          git add -A
+          git commit -m "Update automatically on $(date)"
+          git push origin master
