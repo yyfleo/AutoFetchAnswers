@@ -16,7 +16,7 @@ print("使用本软件即代表你同意以上条款，否则请立即关闭本�
 if not os.path.exists("docs"):
     os.makedirs("docs")
 csrf = GetTaskList.getCsrf()
-token = os.environ["X_TOKEN"]
+token = os.environ["x-token"]
 j = json.loads(GetTaskList.getAccountUndoneTasks(token, False, csrf))
 
 print("\nGot tasks list success! Fetching answers list sequentially......")
