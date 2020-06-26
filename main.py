@@ -5,9 +5,9 @@ import glob
 from SeewoClassApi import GetCookies, GetTaskList, GetAnswer, GetTaskList
 
 print("Seewo eClass Fetch Reference Answer Tool Embed")
-print("V2.2 Embed in Github Actions")
+print("V3.0 Embed in Github Actions")
 print("By yyfleo.")
-print("Build 20200625\n")
+print("Build 20200626\n")
 print("请注意：")
 print("本软件仅供学习与交流使用，查到的答案也仅供作业校对订正时参考，请勿使用于非法用途！")
 print("使用本软件所产生的一切后果由使用者承担，软件编写者不负任何责任！")
@@ -27,7 +27,9 @@ for item in j["data"]:
     with open("docs/" + item["taskName"] + ".html", "w") as f:
         f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The reference answers for ")
         f.write(item["taskName"])
-        f.write("</title></head>")
+        f.write("</title><meta name=\"author\" content=\"yyfleo\"><meta name=\"copyright\" content=\"yyfleo\"><meta name=\"generator\" content=\"Seewo eClass Fetch Reference Answer Tool Embed 3.0 Build 20200626\"><meta name=\"description\" content=\"The reference answers for ")
+        f.write(item["taskName"])
+        f.write("\"></head>")
         f.write("<body>")
         f.write(item["taskName"])
         f.write("<br>Last updated on ")
@@ -39,12 +41,12 @@ for item in j["data"]:
 
 print("\nFetched all answers successfully. Generating index.html......")
 with open("docs/index.html", "w") as f:
-    f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The fetched answers list</title></head>")
-    f.write("<body><h2>Fetched answers list:</h2><i>Updates on 4, 10, 15 UTC every day</i><br><i>Last updated on ")
+    f.write("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>The fetched answers list</title><meta name=\"author\" content=\"yyfleo\"><meta name=\"copyright\" content=\"yyfleo\"><meta name=\"generator\" content=\"Seewo eClass Fetch Reference Answer Tool Embed 3.0 Build 20200626\"><meta name=\"description\" content=\"The fetched answers list of Seewo eClass\"></head>")
+    f.write("<body><h2>Fetched answers list:</h2><i>Updates automatically on 4, 10, 15 UTC every day</i><br><i>Last updated on ")
     f.write(time.asctime(time.localtime(time.time())))
     f.write(" (UTC)</i><br>")
     count = 1
-    for filename in sorted(glob.glob(os.getcwd() + "/docs/*.html"), key=os.path.getmtime, reverse=True):
+    for filename in sorted(glob.glob(os.getcwd() + "/docs/*.html"), reverse=True):
         temp = filename.split("/")
         if temp[len(temp) - 1] == "index.html":
             continue
